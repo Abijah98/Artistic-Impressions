@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistic Impressions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Define custom colors for easier use if needed, though Tailwind direct classes are preferred */
+        .bg-french-violet { background-color: #7B00B9; }
+        .text-french-violet { color: #7B00B9; }
+        .bg-teal { background-color: #008080; }
+        .text-teal { color: #008080; }
+        .bg-cambridge-blue { background-color: #96B596; }
+        .text-cambridge-blue { color: #96B596; }
+        .bg-pantone-orange { background-color: #FF6008; }
+        .text-pantone-orange { color: #FF6008; }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Basic styling for active nav link */
+        .nav-link-active {
+            color: #FF6008; /* Orange for active link */
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-bold text-french-violet">Artistic Impressions</a>
+            <div class="space-x-4">
+                <a href="#home" class="text-gray-600 hover:text-pantone-orange nav-link">Home</a>
+                <a href="#about" class="text-gray-600 hover:text-pantone-orange nav-link">About</a>
+                <a href="#gallery" class="text-gray-600 hover:text-pantone-orange nav-link">Gallery</a>
+                <a href="#themes" class="text-gray-600 hover:text-pantone-orange nav-link">Themes</a>
+                <a href="#contact" class="text-gray-600 hover:text-pantone-orange nav-link">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="bg-french-violet text-white py-20 md:py-32">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Inspiring Creativity & Joy</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+                Unique artistic expression, blending traditional and modern styles, igniting imagination one impression at a time.
+            </p>
+            <a href="#gallery" class="bg-pantone-orange hover:bg-orange-700 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-300">Explore Our Art</a>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-24 bg-cambridge-blue text-gray-700">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">About Artistic Impressions</h2>
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                    <img src="https://placehold.co/600x400/FFFFFF/008080?text=Artist+at+Work" alt="About Artistic Impressions" class="rounded-lg shadow-xl w-full h-auto">
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-2xl font-semibold mb-4 text-white">Our Vision</h3>
+                    <p class="mb-4">
+                        At Artistic Impressions, we believe in the power of art to inspire, heal, and connect. Our vision is to create a space where creativity flourishes and joy is shared through unique artistic expressions.
+                    </p>
+                    <p class="mb-4">
+                        We blend traditional techniques with modern aesthetics, offering a diverse range of art forms that speak to the soul. Each piece is crafted with passion, aiming to ignite your imagination.
+                    </p>
+                    <a href="#contact" class="bg-pantone-orange hover:bg-orange-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-16 md:py-24 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16 text-teal">Our Creative Gallery</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/EEEEEE/7B00B9?text=Pencil+Sketch" alt="Pencil Sketches" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-french-violet">Pencil Sketches</h3>
+                        <p class="text-gray-600 text-sm mb-4">Detailed and expressive portraits, landscapes, and still life drawings.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/FFFFFF/008080?text=Watercolor+Art" alt="Watercolor Art" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-teal">Watercolor Art</h3>
+                        <p class="text-gray-600 text-sm mb-4">Vibrant and fluid paintings capturing the beauty of nature and imagination.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/DDDDDD/FF6008?text=Digital+Art" alt="Digital Art" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-pantone-orange">Digital Art</h3>
+                        <p class="text-gray-600 text-sm mb-4">Modern creations, book covers, and illustrations brought to life digitally.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/CCCCCC/7B00B9?text=Coloured+Pencil" alt="Coloured Pencil Art" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-french-violet">Coloured Pencil Art</h3>
+                        <p class="text-gray-600 text-sm mb-4">Richly layered and vibrant artwork with colored pencils.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/BBBBBB/008080?text=Oil+Painting" alt="Oil & Acrylic Painting" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2 text-teal">Oil & Acrylic Painting</h3>
+                        <p class="text-gray-600 text-sm mb-4">Expressive paintings with rich textures and bold colors.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+                 <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                    <img src="https://placehold.co/600x400/AAAAAA/96B596?text=Doodling+Art" alt="Doodling Art" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2" style="color: #96B596;">Doodling & Grief Art</h3>
+                        <p class="text-gray-600 text-sm mb-4">Therapeutic and imaginative doodles and coloring pages.</p>
+                        <a href="#" class="text-pantone-orange hover:text-orange-700 font-medium">View More &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="themes" class="py-16 md:py-24 bg-teal text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explore Our Themes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white/20 backdrop-blur-md p-6 rounded-lg shadow-lg hover:bg-white/30 transition-colors duration-300">
+                    <h3 class="text-2xl font-semibold mb-3">Art Therapy & Wellness</h3>
+                    <p class="mb-4 text-gray-200">Discover the healing power of art for self-expression and mental well-being.</p>
+                    <a href="#" class="font-semibold text-pantone-orange hover:text-orange-400">Read More &rarr;</a>
+                </div>
+                <div class="bg-white/20 backdrop-blur-md p-6 rounded-lg shadow-lg hover:bg-white/30 transition-colors duration-300">
+                    <h3 class="text-2xl font-semibold mb-3">Artist's Journey</h3>
+                    <p class="mb-4 text-gray-200">Peek behind the scenes, learn about the creative process, and connect with the artist.</p>
+                    <a href="#" class="font-semibold text-pantone-orange hover:text-orange-400">Read More &rarr;</a>
+                </div>
+                <div class="bg-white/20 backdrop-blur-md p-6 rounded-lg shadow-lg hover:bg-white/30 transition-colors duration-300">
+                    <h3 class="text-2xl font-semibold mb-3">Seasonal Inspirations</h3>
+                    <p class="mb-4 text-gray-200">Art that ties into life's moments, holidays, and the changing seasons.</p>
+                    <a href="#" class="font-semibold text-pantone-orange hover:text-orange-400">Read More &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 md:py-24 bg-french-violet">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Be Inspired?</h2>
+            <p class="text-lg text-gray-200 mb-8 max-w-xl mx-auto">
+                Connect with us for custom orders, collaborations, or just to share your artistic journey.
+            </p>
+            <a href="mailto:your.email@example.com" class="bg-pantone-orange hover:bg-orange-700 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-300 mr-0 mb-4 md:mb-0 md:mr-4">Email Us</a>
+            <a href="#gallery" class="bg-cambridge-blue hover:bg-teal-600 text-white font-semibold py-3 px-8 rounded-lg text-lg transition duration-300">Browse Gallery</a>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-300 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-semibold text-french-violet mb-2">Artistic Impressions</p>
+            <div class="mb-4">
+                <a href="#" class="px-3 hover:text-pantone-orange">Instagram</a>
+                <a href="#" class="px-3 hover:text-pantone-orange">Pinterest</a>
+                <a href="#" class="px-3 hover:text-pantone-orange">Etsy</a>
+            </div>
+            <p>&copy; <span id="currentYear"></span> Artistic Impressions. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Designed with <span class="text-pantone-orange">&hearts;</span> and Creativity</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for dynamic year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // JavaScript for active navigation link highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section[id]');
+
+        function changeNav() {
+            let index = sections.length;
+
+            while(--index && window.scrollY + 100 < sections[index].offsetTop) {} // 100 is an offset
+            
+            navLinks.forEach((link) => link.classList.remove('nav-link-active'));
+            if (navLinks[index]) { // Check if the link exists
+                 navLinks[index].classList.add('nav-link-active');
+            }
+        }
+
+        // Initial call to set active link on page load
+        changeNav(); 
+        // Event listener for scroll
+        window.addEventListener('scroll', changeNav);
+    </script>
+
+</body>
+</html>
