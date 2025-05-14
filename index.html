@@ -30,6 +30,11 @@
             color: #FF6008; /* Orange for active link */
             font-weight: 600;
         }
+
+/* Basic Reset & Body Style */ body { font-family: sans-serif; /* Remove margin, background-color, display, align-items, min-height, padding from here if your site's body already has these. */ /* Keep only if your body style is minimal */ } /* Section Styles */ .custom-gallery-section { background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 700px; /* Max width of the gallery section */ text-align: center; margin: 20px auto; /* Adds some space around the gallery section */ } .custom-gallery-section h2 { margin-top: 0; margin-bottom: 20px; color: #333; } /* Gallery Container */ .simple-gallery { position: relative; /* For positioning arrows */ width: 100%; max-width: 600px; margin: 0 auto; overflow: hidden; } .simple-gallery-image-container { position: relative; /* For containing the image and allowing overlay */ width: 100%; min-height: 300px; /* Placeholder height, adjust as needed */ background-color: #e9e9e9; border-radius: 6px; overflow: hidden; display: flex; justify-content: center; align-items: center; /* Removed margin-bottom: 15px; as arrows are overlayed */ } .simple-gallery img.gallery-current-image { display: block; width: 100%; height: auto; max-height: 450px; /* Adjust as needed */ object-fit: contain; cursor: pointer; border-radius: 6px; opacity: 1; transition: opacity 0.4s ease-in-out; /* Fade transition */ } .simple-gallery img.gallery-current-image.fading { opacity: 0; } /* Navigation Arrows Overlay */ .gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.4); color: white; border: none; border-radius: 50%; /* Circular buttons */ width: 40px; height: 40px; font-size: 20px; /* Adjust for arrow size */ line-height: 40px; /* Center arrow character */ text-align: center; cursor: pointer; z-index: 10; transition: background-color 0.2s ease, opacity 0.3s ease; opacity: 0.7; display: flex; justify-content: center; align-items: center; } .gallery-arrow:hover { background-color: rgba(0, 0, 0, 0.7); opacity: 1; } .gallery-arrow.hidden { /* To hide arrows if only one image */ display: none; } #prevImageBtn { left: 10px; } #nextImageBtn { right: 10px; } /* Fullscreen Modal Styles */ .fullscreen-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px; box-sizing: border-box; } .fullscreen-viewer.active { display: flex; } .fullscreen-viewer img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 4px; } .fullscreen-viewer .close-fullscreen { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: white; background-color: transparent; border: none; cursor: pointer; line-height: 1; } .fullscreen-viewer .close-fullscreen:hover { color: #F04E23; }
+        
+
+        
     </style>
 </head>
 
@@ -126,6 +131,10 @@
 
 
 
+
+<section class="custom-gallery-section"> <h2>My Simple Image Gallery</h2> <!- You can change this title -> <div class="simple-gallery"> <div class="simple-gallery-image-container"> <img src="https://i.imgur.com/8sNfb0e.png" alt="Gallery Image 1" id="currentGalleryImage" class="gallery-current-image"> <button id="prevImageBtn" class="gallery-arrow">&larr;</button> <button id="nextImageBtn" class="gallery-arrow">&rarr;</button> </div> </div> </section>
+
+    
     
 
     <section id="gallery" class="py-16 md:py-24 bg-gray-50">
@@ -265,7 +274,7 @@
 
 
 
-
+<div id="fullscreenViewer" class="fullscreen-viewer"> <button class="close-fullscreen" id="closeFullscreenBtnGlob">&times;</button> <img src="" alt="Fullscreen Image" id="fullscreenImageContentGlob"> </div>
 
 
 
@@ -298,6 +307,111 @@
         // Event listener for scroll
         window.addEventListener('scroll', changeNav);
     </script>
+
+    <script>
+    const images = [
+        "https://i.imgur.com/8sNfb0e.png",
+        "https://i.imgur.com/F5d6VbL.png",
+        "https://i.imgur.com/fIWCHy1.png",
+        "https://i.imgur.com/o5Y99zx.png",
+        "https://i.imgur.com/ueo51PI.png",
+        "https://i.imgur.com/CHUV5sz.png",
+        "https://i.imgur.com/TsEKPip.png",
+        "https://i.imgur.com/mPs1Xlt.png",
+        "https://i.imgur.com/9K34WOZ.png",
+        "https://i.imgur.com/9wzPWDH.png",
+        "https://i.imgur.com/rH1usGG.png",
+        "https://i.imgur.com/xXyIZa0.png"
+    ];
+
+    let currentImageIndex = 0;
+    const FADE_DURATION = 400; // Corresponds to CSS transition duration
+
+    const currentGalleryImage = document.getElementById('currentGalleryImage');
+    const nextImageBtn = document.getElementById('nextImageBtn');
+    const prevImageBtn = document.getElementById('prevImageBtn');
+
+    const fullscreenViewer = document.getElementById('fullscreenViewer');
+    const fullscreenImageContent = document.getElementById('fullscreenImageContentGlob');
+    const closeFullscreenBtn = document.getElementById('closeFullscreenBtnGlob');
+
+    function updateGalleryImage(newIndex) {
+        currentGalleryImage.classList.add('fading');
+
+        setTimeout(() => {
+            currentImageIndex = newIndex;
+            currentGalleryImage.src = images[currentImageIndex];
+            currentGalleryImage.alt = `Gallery Image ${currentImageIndex + 1}`;
+            currentGalleryImage.classList.remove('fading');
+        }, FADE_DURATION / 2);
+    }
+
+    function showHideArrows() {
+        if (images.length <= 1) {
+            prevImageBtn.classList.add('hidden');
+            nextImageBtn.classList.add('hidden');
+        } else {
+            prevImageBtn.classList.remove('hidden');
+            nextImageBtn.classList.remove('hidden');
+        }
+    }
+
+    // Initialize
+    // Ensure the DOM is fully loaded before trying to access elements,
+    // though placing script at bottom usually suffices.
+    // For extra safety, you can wrap the initialization and event listeners in:
+    // document.addEventListener('DOMContentLoaded', () => { /* ... code ... */ });
+    // But for this case, direct execution should be fine due to script placement.
+
+    currentGalleryImage.src = images[currentImageIndex];
+    currentGalleryImage.alt = `Gallery Image ${currentImageIndex + 1}`;
+    showHideArrows();
+
+
+    // --- Navigation ---
+    nextImageBtn.addEventListener('click', () => {
+        let newIndex = currentImageIndex + 1;
+        if (newIndex >= images.length) {
+            newIndex = 0;
+        }
+        updateGalleryImage(newIndex);
+    });
+
+    prevImageBtn.addEventListener('click', () => {
+        let newIndex = currentImageIndex - 1;
+        if (newIndex < 0) {
+            newIndex = images.length - 1;
+        }
+        updateGalleryImage(newIndex);
+    });
+
+    // --- Fullscreen Functionality ---
+    currentGalleryImage.addEventListener('click', () => {
+        fullscreenImageContent.src = images[currentImageIndex];
+        fullscreenImageContent.alt = `Fullscreen Image ${currentImageIndex + 1}`;
+        fullscreenViewer.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeFullscreenBtn.addEventListener('click', () => {
+        fullscreenViewer.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    fullscreenViewer.addEventListener('click', (event) => {
+        if (event.target === fullscreenViewer) {
+            fullscreenViewer.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
+            fullscreenViewer.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+</script>
 
 </body>
 </html>
