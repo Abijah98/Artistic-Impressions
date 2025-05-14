@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extra Gallery - Artistic Impressions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            --french-violet: #7B00B9;
+            --teal: #008080;
+            --cambridge-blue: #96B596;
+            --pantone-orange: #FF6008;
+        }
+        .bg-french-violet { background-color: var(--french-violet); }
+        .text-french-violet { color: var(--french-violet); }
+        .bg-teal { background-color: var(--teal); }
+        .text-teal { color: var(--teal); }
+        .bg-cambridge-blue { background-color: var(--cambridge-blue); }
+        .text-cambridge-blue { color: var(--cambridge-blue); }
+        .bg-pantone-orange { background-color: var(--pantone-orange); }
+        .text-pantone-orange { color: var(--pantone-orange); }
+        .border-pantone-orange { border-color: var(--pantone-orange); }
+
+        /* Smooth scroll behavior (though less relevant for a page without many #links) */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Styling for the active link on this page */
+        .nav-link-extra-active {
+            color: var(--pantone-orange) !important;
+            font-weight: 600;
+        }
+
+        /* Slideshow and Modal Styles */
+        .slideshow-container {
+            position: relative;
+            margin: auto;
+        }
+        .slide {
+            display: none; /* Hidden by default */
+            text-align: center;
+        }
+        .slide img {
+            max-height: 60vh; /* Adjust as needed */
+            object-fit: contain;
+            cursor: pointer; /* Indicate it's clickable */
+            border-radius: 0.5rem; /* Rounded corners for slide images */
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.3s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .dots-container {
+            text-align: center;
+            padding: 10px 0;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .active-dot, .dot:hover {
+            background-color: var(--pantone-orange);
+        }
+
+        /* Modal (Lightbox) Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 100; /* Sit on top */
+            padding-top: 50px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 800px; /* Max width of modal image */
+            border-radius: 0.5rem;
+        }
+        .modal-caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close-modal:hover,
+        .close-modal:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center">
+            <a href="index.html" class="text-3xl font-bold text-french-violet mb-2 sm:mb-0">Artistic Impressions</a>
+            <div class="space-x-2 sm:space-x-4 text-center sm:text-left">
+                <a href="index.html#home" class="text-gray-600 hover:text-pantone-orange px-2 py-1 sm:px-0 sm:py-0">Home</a>
+                <a href="index.html#about" class="text-gray-600 hover:text-pantone-orange px-2 py-1 sm:px-0 sm:py-0">About</a>
+                <a href="index.html#gallery" class="text-gray-600 hover:text-pantone-orange px-2 py-1 sm:px-0 sm:py-0">Gallery</a>
+                <a href="index.html#themes" class="text-gray-600 hover:text-pantone-orange px-2 py-1 sm:px-0 sm:py-0">Themes</a>
+                <a href="index.html#contact" class="text-gray-600 hover:text-pantone-orange px-2 py-1 sm:px-0 sm:py-0">Contact</a>
+                <a href="extra.html" class="text-gray-600 hover:text-pantone-orange nav-link-extra-active px-2 py-1 sm:px-0 sm:py-0">Extra</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12 md:py-16">
+        <section id="extra-gallery">
+            <h1 class="text-3xl md:text-4xl font-bold text-center mb-12 text-teal">Extra Gallery Showcase</h1>
+            
+            <div class="slideshow-container max-w-3xl mx-auto bg-white p-4 sm:p-6 rounded-lg shadow-xl">
+                <div class="slide">
+                    <img src="https://placehold.co/800x600/7B00B9/FFFFFF?text=Artwork+1" alt="Artwork 1" onclick="openModal(this)">
+                    <div class="p-4 text-french-violet font-semibold">Vibrant Abstract 1</div>
+                </div>
+                <div class="slide">
+                    <img src="https://placehold.co/800x600/008080/FFFFFF?text=Artwork+2" alt="Artwork 2" onclick="openModal(this)">
+                    <div class="p-4 text-teal font-semibold">Serene Landscape</div>
+                </div>
+                <div class="slide">
+                    <img src="https://placehold.co/800x600/96B596/333333?text=Artwork+3" alt="Artwork 3" onclick="openModal(this)">
+                    <div class="p-4 text-cambridge-blue font-semibold">Nature's Detail</div>
+                </div>
+                <div class="slide">
+                    <img src="https://placehold.co/800x600/FF6008/FFFFFF?text=Artwork+4" alt="Artwork 4" onclick="openModal(this)">
+                    <div class="p-4 text-pantone-orange font-semibold">Bold Expression</div>
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+
+            <div class="dots-container mt-4">
+                <span class="dot" onclick="currentSlide(1)"></span>
+                <span class="dot" onclick="currentSlide(2)"></span>
+                <span class="dot" onclick="currentSli_de(3)"></span>
+                <span class="dot" onclick="currentSlide(4)"></span>
+            </div>
+        </section>
+    </main>
+
+    <div id="imageModal" class="modal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <footer class="bg-gray-800 text-gray-300 py-12 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-2xl font-semibold text-french-violet mb-2">Artistic Impressions</p>
+            <div class="mb-4">
+                <a href="#" class="px-3 hover:text-pantone-orange">Instagram</a>
+                <a href="#" class="px-3 hover:text-pantone-orange">Pinterest</a>
+                <a href="#" class="px-3 hover:text-pantone-orange">Etsy</a>
+            </div>
+            <p>&copy; <span id="currentYearExtra"></span> Artistic Impressions. All Rights Reserved.</p>
+            <p class="text-sm mt-2">Designed with <span class="text-pantone-orange">&hearts;</span> and Creativity</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for dynamic year in footer
+        document.getElementById('currentYearExtra').textContent = new Date().getFullYear();
+
+        // Slideshow Logic
+        let slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active-dot";
+        }
+
+        // Modal Logic
+        var modal = document.getElementById("imageModal");
+        var modalImg = document.getElementById("modalImage");
+        var captionText = document.getElementById("modalCaption");
+
+        function openModal(element) {
+            modal.style.display = "block";
+            modalImg.src = element.src;
+            captionText.innerHTML = element.alt; // Use alt text for caption
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Close modal if user clicks outside the image
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+</html>
