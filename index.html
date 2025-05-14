@@ -31,18 +31,28 @@
             font-weight: 600;
         }
 
+
+
+
+     /* Basic Reset & Body Style */ body { font-family: sans-serif; margin: 0; background-color: #f0f0f0; /* Page background, distinct from gallery section */ display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; box-sizing: border-box; } /* Section Styles */ .custom-gallery-section { background-color: #008080; /* MODIFIED: Teal background */ padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 800px; /* INCREASED: Max width of the gallery section for 3 images */ text-align: center; } .custom-gallery-section h2 { margin-top: 0; margin-bottom: 20px; color: #fff; /* Adjusted for darker background */ } /* Gallery Container */ .simple-gallery { position: relative; /* For positioning arrows */ width: 100%; max-width: 750px; /* INCREASED: Max width for image area */ margin: 0 auto; overflow: hidden; /* This was on simple-gallery-image-container before, moved here for clarity */ } .simple-gallery-image-container { position: relative; /* For overlaying arrows */ width: 100%; background-color: transparent; /* Container itself transparent, rely on image backgrounds or section bg */ border-radius: 6px; display: flex; justify-content: center; /* Center the group of images */ align-items: stretch; /* Make images of equal height if object-fit is cover, or center if contain */ gap: 10px; /* Space between images */ padding: 5px 0; /* Optional padding around the image group */ margin-bottom: 15px; /* Space below image container (e.g., if external controls existed) */ } /* MODIFIED: Styles for each of the three images */ .gallery-triplet-image { flex: 1; /* Each image takes equal width */ min-width: 0; /* Important for flex items to shrink properly */ height: auto; /* Maintain aspect ratio */ max-height: 220px; /* Adjust as needed for desired image height */ object-fit: contain; /* 'contain' shows whole image, 'cover' fills and crops */ cursor: pointer; border-radius: 6px; opacity: 1; transition: opacity 0.4s ease-in-out; /* Fade transition */ background-color: #e0e0e0; /* Placeholder color for image slot before load or if image is smaller */ } .gallery-triplet-image.fading { opacity: 0; } /* Navigation Arrows Overlay */ .gallery-arrow { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0, 0, 0, 0.4); color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; line-height: 40px; /* Center arrow character */ text-align: center; cursor: pointer; z-index: 10; transition: background-color 0.2s ease, opacity 0.3s ease; opacity: 0.7; display: flex; justify-content: center; align-items: center; } .gallery-arrow:hover { background-color: rgba(0, 0, 0, 0.7); opacity: 1; } .gallery-arrow.hidden { display: none; } #prevImageBtn { left: 10px; /* Positioned relative to simple-gallery-image-container */ } #nextImageBtn { right: 10px; /* Positioned relative to simple-gallery-image-container */ } /* Fullscreen Modal Styles (Unchanged from original) */ .fullscreen-viewer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; justify-content: center; align-items: center; z-index: 2000; padding: 15px; box-sizing: border-box; } .fullscreen-viewer.active { display: flex; } .fullscreen-viewer img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 4px; } .fullscreen-viewer .close-fullscreen { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: white; background-color: transparent; border: none; cursor: pointer; line-height: 1; } .fullscreen-viewer .close-fullscreen:hover { color: #F04E23; }
+        
+
+        
         
     </style>
+
+
+
+
+
+
+
 
 
     
 
     
 </head>
-
-
-
-
 
 
     
@@ -120,6 +130,9 @@
 
 
 
+
+    
+<section class="custom-gallery-section"> <h2>My Image Gallery (3 at a time)</h2> <div class="simple-gallery"> <div class="simple-gallery-image-container"> <img src="" alt="Gallery Image Slot 1" id="galleryImageSlot1" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 2" id="galleryImageSlot2" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 3" id="galleryImageSlot3" class="gallery-triplet-image"> <button id="prevImageBtn" class="gallery-arrow">&larr;</button> <button id="nextImageBtn" class="gallery-arrow">&rarr;</button> </div> </div> </section> <div id="fullscreenViewer" class="fullscreen-viewer"> <button class="close-fullscreen" id="closeFullscreenBtnGlob">&times;</button> <img src="" alt="Fullscreen Image" id="fullscreenImageContentGlob"> </div>
     
     
 
@@ -294,6 +307,10 @@
         window.addEventListener('scroll', changeNav);
     </script>
 
+
+
+
+<script> const images = [ "https://i.imgur.com/8sNfb0e.png", // Image 1 "https://i.imgur.com/F5d6VbL.png", // Image 2 "https://i.imgur.com/fIWCHy1.png", // Image 3 "https://i.imgur.com/o5Y99zx.png", // Image 4 "https://i.imgur.com/ueo51PI.png", // Image 5 "https://i.imgur.com/CHUV5sz.png", // Image 6 "https://i.imgur.com/TsEKPip.png", // Image 7 "https://i.imgur.com/mPs1Xlt.png", // Image 8 "https://i.imgur.com/9K34WOZ.png", // Image 9 "https://i.imgur.com/9wzPWDH.png", // Image 10 "https://i.imgur.com/rH1usGG.png", // Image 11 "https://i.imgur.com/xXyIZa0.png"  // Image 12 ]; let currentImageIndex = 0; // Index of the first image in the displayed triplet const FADE_DURATION = 400; // Corresponds to CSS transition duration // MODIFIED: Get the three image elements const galleryImageSlot1 = document.getElementById('galleryImageSlot1'); const galleryImageSlot2 = document.getElementById('galleryImageSlot2'); const galleryImageSlot3 = document.getElementById('galleryImageSlot3'); const galleryImageElements = [galleryImageSlot1, galleryImageSlot2, galleryImageSlot3]; const nextImageBtn = document.getElementById('nextImageBtn'); const prevImageBtn = document.getElementById('prevImageBtn'); const fullscreenViewer = document.getElementById('fullscreenViewer'); const fullscreenImageContent = document.getElementById('fullscreenImageContentGlob'); const closeFullscreenBtn = document.getElementById('closeFullscreenBtnGlob'); function updateGalleryImages(startIndex) { if (images.length === 0) { galleryImageElements.forEach(imgEl => { imgEl.style.display = 'none'; // Hide image slots if no images }); showHideArrows(); // Ensure arrows are hidden return; } galleryImageElements.forEach(imgEl => { imgEl.classList.add('fading'); imgEl.style.display = 'block'; // Ensure visible if previously hidden }); setTimeout(() => { currentImageIndex = startIndex; galleryImageElements.forEach((imgEl, i) => { const imageToShowIndex = (currentImageIndex + i) % images.length; imgEl.src = images[imageToShowIndex]; imgEl.alt = `Gallery Image ${imageToShowIndex + 1}`; }); galleryImageElements.forEach(imgEl => imgEl.classList.remove('fading')); }, FADE_DURATION / 2); } function showHideArrows() { if (images.length <= 1) { // If only 1 unique image, no navigation needed for the set prevImageBtn.classList.add('hidden'); nextImageBtn.classList.add('hidden'); } else { prevImageBtn.classList.remove('hidden'); nextImageBtn.classList.remove('hidden'); } } // --- Initialize --- if (images.length > 0) { updateGalleryImages(currentImageIndex); } else { // Handle case with no images (e.g., hide gallery section or show a message) document.querySelector('.custom-gallery-section h2').textContent = "No images to display"; galleryImageElements.forEach(imgEl => imgEl.style.display = 'none'); } showHideArrows(); // --- Navigation --- nextImageBtn.addEventListener('click', () => { if (images.length === 0) return; let newStartIndex = (currentImageIndex + 1) % images.length; updateGalleryImages(newStartIndex); }); prevImageBtn.addEventListener('click', () => { if (images.length === 0) return; let newStartIndex = (currentImageIndex - 1 + images.length) % images.length; updateGalleryImages(newStartIndex); }); // --- Fullscreen Functionality --- galleryImageElements.forEach((imgElement, indexInTriplet) => { imgElement.addEventListener('click', () => { if (images.length === 0) return; const actualImageIndex = (currentImageIndex + indexInTriplet) % images.length; fullscreenImageContent.src = images[actualImageIndex]; fullscreenImageContent.alt = `Fullscreen Image ${actualImageIndex + 1}`; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; }); }); closeFullscreenBtn.addEventListener('click', () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; }); fullscreenViewer.addEventListener('click', (event) => { if (event.target === fullscreenViewer) { // Click on backdrop fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; } }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && fullscreenViewer.classList.contains('active')) { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; } }); </script>
     
 </body>
 </html>
