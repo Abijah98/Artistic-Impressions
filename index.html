@@ -135,8 +135,7 @@
 
 
     
-<section class="custom-gallery-section"> <h2>My Image Gallery (3 at a time)</h2> <div class="simple-gallery"> <div class="simple-gallery-image-container"> <img src="" alt="Gallery Image Slot 1" id="galleryImageSlot1" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 2" id="galleryImageSlot2" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 3" id="galleryImageSlot3" class="gallery-triplet-image"> <button id="prevImageBtn" class="gallery-arrow">&larr;</button> <button id="nextImageBtn" class="gallery-arrow">&rarr;</button> </div> </div> </section> <div id="fullscreenViewer" class="fullscreen-viewer"> <button class="close-fullscreen" id="closeFullscreenBtnGlob">&times;</button> <img src="" alt="Fullscreen Image" id="fullscreenImageContentGlob"> </div>
-    
+<div class="swiper" style="display: none;"> <div class="swiper-wrapper"> <div class="swiper-slide"><img src="https://i.imgur.com/8sNfb0e.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/F5d6VbL.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/fIWCHy1.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/o5Y99zx.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/ueo51PI.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/CHUV5sz.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/TsEKPip.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/mPs1Xlt.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/9K34WOZ.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/9wzPWDH.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/rH1usGG.png" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/xXyIZa0.png" /></div> </div> </div> <section class="custom-gallery-section"> <h2>My Image Gallery (3 at a time)</h2> <div class="simple-gallery"> <div class="simple-gallery-image-container"> <img src="" alt="Gallery Image Slot 1" id="galleryImageSlot1" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 2" id="galleryImageSlot2" class="gallery-triplet-image"> <img src="" alt="Gallery Image Slot 3" id="galleryImageSlot3" class="gallery-triplet-image"> <button id="prevImageBtn" class="gallery-arrow">&larr;</button> <button id="nextImageBtn" class="gallery-arrow">&rarr;</button> </div> </div> </section> <div id="fullscreenViewer" class="fullscreen-viewer"> <button class="close-fullscreen" id="closeFullscreenBtnGlob">&times;</button> <img src="" alt="Fullscreen Image" id="fullscreenImageContentGlob"> </div>    
     
 
     <section id="gallery" class="py-16 md:py-24 bg-gray-50">
@@ -313,7 +312,142 @@
 
 
 
-<script> const images = [ "https://i.imgur.com/8sNfb0e.png", // Image 1 "https://i.imgur.com/F5d6VbL.png", // Image 2 "https://i.imgur.com/fIWCHy1.png", // Image 3 "https://i.imgur.com/o5Y99zx.png", // Image 4 "https://i.imgur.com/ueo51PI.png", // Image 5 "https://i.imgur.com/CHUV5sz.png", // Image 6 "https://i.imgur.com/TsEKPip.png", // Image 7 "https://i.imgur.com/mPs1Xlt.png", // Image 8 "https://i.imgur.com/9K34WOZ.png", // Image 9 "https://i.imgur.com/9wzPWDH.png", // Image 10 "https://i.imgur.com/rH1usGG.png", // Image 11 "https://i.imgur.com/xXyIZa0.png"  // Image 12 ]; let currentImageIndex = 0; // Index of the first image in the displayed triplet const FADE_DURATION = 400; // Corresponds to CSS transition duration // MODIFIED: Get the three image elements const galleryImageSlot1 = document.getElementById('galleryImageSlot1'); const galleryImageSlot2 = document.getElementById('galleryImageSlot2'); const galleryImageSlot3 = document.getElementById('galleryImageSlot3'); const galleryImageElements = [galleryImageSlot1, galleryImageSlot2, galleryImageSlot3]; const nextImageBtn = document.getElementById('nextImageBtn'); const prevImageBtn = document.getElementById('prevImageBtn'); const fullscreenViewer = document.getElementById('fullscreenViewer'); const fullscreenImageContent = document.getElementById('fullscreenImageContentGlob'); const closeFullscreenBtn = document.getElementById('closeFullscreenBtnGlob'); function updateGalleryImages(startIndex) { if (images.length === 0) { galleryImageElements.forEach(imgEl => { imgEl.style.display = 'none'; // Hide image slots if no images }); showHideArrows(); // Ensure arrows are hidden return; } galleryImageElements.forEach(imgEl => { imgEl.classList.add('fading'); imgEl.style.display = 'block'; // Ensure visible if previously hidden }); setTimeout(() => { currentImageIndex = startIndex; galleryImageElements.forEach((imgEl, i) => { const imageToShowIndex = (currentImageIndex + i) % images.length; imgEl.src = images[imageToShowIndex]; imgEl.alt = `Gallery Image ${imageToShowIndex + 1}`; }); galleryImageElements.forEach(imgEl => imgEl.classList.remove('fading')); }, FADE_DURATION / 2); } function showHideArrows() { if (images.length <= 1) { // If only 1 unique image, no navigation needed for the set prevImageBtn.classList.add('hidden'); nextImageBtn.classList.add('hidden'); } else { prevImageBtn.classList.remove('hidden'); nextImageBtn.classList.remove('hidden'); } } // --- Initialize --- if (images.length > 0) { updateGalleryImages(currentImageIndex); } else { // Handle case with no images (e.g., hide gallery section or show a message) document.querySelector('.custom-gallery-section h2').textContent = "No images to display"; galleryImageElements.forEach(imgEl => imgEl.style.display = 'none'); } showHideArrows(); // --- Navigation --- nextImageBtn.addEventListener('click', () => { if (images.length === 0) return; let newStartIndex = (currentImageIndex + 1) % images.length; updateGalleryImages(newStartIndex); }); prevImageBtn.addEventListener('click', () => { if (images.length === 0) return; let newStartIndex = (currentImageIndex - 1 + images.length) % images.length; updateGalleryImages(newStartIndex); }); // --- Fullscreen Functionality --- galleryImageElements.forEach((imgElement, indexInTriplet) => { imgElement.addEventListener('click', () => { if (images.length === 0) return; const actualImageIndex = (currentImageIndex + indexInTriplet) % images.length; fullscreenImageContent.src = images[actualImageIndex]; fullscreenImageContent.alt = `Fullscreen Image ${actualImageIndex + 1}`; fullscreenViewer.classList.add('active'); document.body.style.overflow = 'hidden'; }); }); closeFullscreenBtn.addEventListener('click', () => { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; }); fullscreenViewer.addEventListener('click', (event) => { if (event.target === fullscreenViewer) { // Click on backdrop fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; } }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && fullscreenViewer.classList.contains('active')) { fullscreenViewer.classList.remove('active'); document.body.style.overflow = ''; } }); </script>
+    <script>
+        // Dynamically get image URLs from the swiper structure
+        const imageElementsFromSwiper = document.querySelectorAll('.swiper .swiper-wrapper .swiper-slide img');
+        const images = Array.from(imageElementsFromSwiper).map(img => img.src);
+
+        // --- The rest of your gallery JavaScript (from the previous correct version) ---
+        let currentImageIndex = 0; // Index of the first image in the displayed triplet
+        const FADE_DURATION = 400; // Corresponds to CSS transition duration
+
+        const galleryImageSlot1 = document.getElementById('galleryImageSlot1');
+        const galleryImageSlot2 = document.getElementById('galleryImageSlot2');
+        const galleryImageSlot3 = document.getElementById('galleryImageSlot3');
+        const galleryImageElements = [galleryImageSlot1, galleryImageSlot2, galleryImageSlot3];
+
+        const nextImageBtn = document.getElementById('nextImageBtn');
+        const prevImageBtn = document.getElementById('prevImageBtn');
+
+        const fullscreenViewer = document.getElementById('fullscreenViewer');
+        const fullscreenImageContent = document.getElementById('fullscreenImageContentGlob');
+        const closeFullscreenBtn = document.getElementById('closeFullscreenBtnGlob');
+
+        function updateGalleryImages(startIndex) {
+            if (images.length === 0) {
+                galleryImageElements.forEach(imgEl => {
+                    imgEl.style.display = 'none'; // Hide image slots if no images
+                });
+                showHideArrows(); // Ensure arrows are hidden
+                if (document.querySelector('.custom-gallery-section h2')) {
+                     document.querySelector('.custom-gallery-section h2').textContent = "No images to display";
+                }
+                return;
+            }
+            
+            galleryImageElements.forEach(imgEl => {
+                imgEl.classList.add('fading');
+                imgEl.style.display = 'block'; // Ensure visible if previously hidden
+            });
+
+            setTimeout(() => {
+                currentImageIndex = startIndex;
+                galleryImageElements.forEach((imgEl, i) => {
+                    const imageToShowIndex = (currentImageIndex + i) % images.length;
+                    // Ensure there's an image at the index before trying to access it
+                    if (images[imageToShowIndex]) {
+                        imgEl.src = images[imageToShowIndex];
+                        imgEl.alt = `Gallery Image ${imageToShowIndex + 1}`;
+                    } else {
+                        // Fallback if image source is somehow undefined for that index (shouldn't happen with modulo if images array is populated)
+                        imgEl.src = ""; 
+                        imgEl.alt = "Image not available";
+                        imgEl.style.display = 'none'; // Optionally hide if truly no image
+                    }
+                });
+                galleryImageElements.forEach(imgEl => imgEl.classList.remove('fading'));
+            }, FADE_DURATION / 2);
+        }
+
+        function showHideArrows() {
+            if (images.length <= 1) { // If only 1 unique image, no navigation needed for the set
+                prevImageBtn.classList.add('hidden');
+                nextImageBtn.classList.add('hidden');
+            } else {
+                prevImageBtn.classList.remove('hidden');
+                nextImageBtn.classList.remove('hidden');
+            }
+        }
+
+        // --- Initialize ---
+        // Ensure the DOM is ready, especially if this script is not at the end of the body
+        // or if the swiper images might be loaded dynamically.
+        // If script is at end of body, DOMContentLoaded might be redundant but safe.
+        document.addEventListener('DOMContentLoaded', () => {
+            // Re-query images here if their loading might be delayed,
+            // or ensure the first query for 'images' happens after DOM is ready.
+            // For simplicity, assuming the first query for 'images' (at the top) is fine if script is at end of body.
+            
+            if (images.length > 0) {
+                updateGalleryImages(currentImageIndex);
+            } else {
+                // Handle case with no images (e.g., hide gallery section or show a message)
+                const galleryTitle = document.querySelector('.custom-gallery-section h2');
+                if (galleryTitle) {
+                    galleryTitle.textContent = "No images found to display";
+                }
+                galleryImageElements.forEach(imgEl => imgEl.style.display = 'none');
+            }
+            showHideArrows();
+        });
+
+
+        // --- Navigation ---
+        nextImageBtn.addEventListener('click', () => {
+            if (images.length === 0) return;
+            let newStartIndex = (currentImageIndex + 1) % images.length;
+            updateGalleryImages(newStartIndex);
+        });
+
+        prevImageBtn.addEventListener('click', () => {
+            if (images.length === 0) return;
+            let newStartIndex = (currentImageIndex - 1 + images.length) % images.length;
+            updateGalleryImages(newStartIndex);
+        });
+
+        // --- Fullscreen Functionality ---
+        galleryImageElements.forEach((imgElement, indexInTriplet) => {
+            imgElement.addEventListener('click', () => {
+                if (images.length === 0) return;
+                const actualImageIndex = (currentImageIndex + indexInTriplet) % images.length;
+                if (images[actualImageIndex]) {
+                    fullscreenImageContent.src = images[actualImageIndex];
+                    fullscreenImageContent.alt = `Fullscreen Image ${actualImageIndex + 1}`;
+                    fullscreenViewer.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeFullscreenBtn.addEventListener('click', () => {
+            fullscreenViewer.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        fullscreenViewer.addEventListener('click', (event) => {
+            if (event.target === fullscreenViewer) { // Click on backdrop
+                fullscreenViewer.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && fullscreenViewer.classList.contains('active')) {
+                fullscreenViewer.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
     
 </body>
 </html>
