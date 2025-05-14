@@ -38,10 +38,6 @@
     </style>
 
 
-
-
-<!-- Swiper CSS --> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"> <style> @layer reset, base, swiper, fullscreen; @layer swiper { .swiper { width: 100%; height: 100%; } .swiper-wrapper { display: flex; align-items: center; } .swiper-slide { scale: 1.25; transition: scale 250ms ease-in-out; cursor: pointer; } .swiper-slide.swiper-slide-active { scale: 2; z-index: 10; } .swiper-slide.swiper-slide-prev, .swiper-slide.swiper-slide-next { scale: 1.7; z-index: 5; transition-duration: 150ms; } .swiper-slide.swiper-slide-next + .swiper-slide { z-index: 2; } .swiper-slide img { display: block; border-radius: 0.5rem; width: 100%; height: 100%; object-fit: cover; user-select: none; } .swiper-button { --position: 17%; background-color: #F04E23; height: 3rem; width: 3rem; border-radius: 0.5rem; } .swiper-button.swiper-button-prev { left: var(--position); } .swiper-button.swiper-button-next { right: var(--position); } .swiper-button:hover { background-color: #4A261F; } .swiper-button::after { font-size: 1.5rem; color: white; } } @layer reset { * { margin: 0; padding: 0; box-sizing: border-box; } body { display: grid; place-items: center; min-height: 100vh; background: #eee; overflow-x: hidden; } } @layer fullscreen { .fullscreen-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 20px; } .fullscreen-modal.active { display: flex; } .fullscreen-modal img { max-width: 95%; max-height: 95%; object-fit: contain; border-radius: 0.5rem; box-shadow: 0 0 25px rgba(0,0,0,0.5); } .fullscreen-modal .close-btn { position: absolute; top: 20px; right: 30px; font-size: 2.5rem; color: white; background-color: #F04E23; border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; cursor: pointer; line-height: 1; padding-bottom: 4px; } .fullscreen-modal .close-btn:hover { background-color: #4A261F; } } </style>
-
     
 
     
@@ -93,12 +89,7 @@
 
 
 
-<div class="swiper"> <div class="swiper-wrapper"> <div class="swiper-slide"><img src="https://i.imgur.com/8sNfb0e.png" alt="Image 1" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/F5d6VbL.png" alt="Image 2" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/fIWCHy1.png" alt="Image 3" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/o5Y99zx.png" alt="Image 4" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/ueo51PI.png" alt="Image 5" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/CHUV5sz.png" alt="Image 6" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/TsEKPip.png" alt="Image 7" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/mPs1Xlt.png" alt="Image 8" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/9K34WOZ.png" alt="Image 9" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/9wzPWDH.png" alt="Image 10" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/rH1usGG.png" alt="Image 11" /></div> <div class="swiper-slide"><img src="https://i.imgur.com/xXyIZa0.png" alt="Image 12" /></div> </div> <div class="swiper-button swiper-button-next"></div> <div class="swiper-button swiper-button-prev"></div> </div> <!-- Fullscreen Modal --> <div id="fullscreenModal" class="fullscreen-modal"> <button class="close-btn" id="closeFullscreenBtn">&times;</button> <img src="" alt="Fullscreen Image" id="fullscreenImage"> </div>
 
-
-
-
-    
 
 
 
@@ -414,10 +405,6 @@
     });
 </script>
 
-
-
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> <script> const swiper = new Swiper(".swiper", { slidesPerView: 5, spaceBetween: 0, centeredSlides: true, loop: true, simulateTouch: 'ontouchstart' in window || navigator.maxTouchPoints > 0, navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev", }, }); const calculateHeight = () => { const swiperContainer = document.querySelector('.swiper'); if (!swiperContainer) return; const swiperSlideElements = Array.from(swiperContainer.querySelectorAll('.swiper-slide')); if (!swiperSlideElements.length) return; const containerWidth = swiperContainer.getBoundingClientRect().width; const slideNominalWidth = containerWidth / swiper.params.slidesPerView; const height = Math.round(slideNominalWidth / (16 / 9)); swiperSlideElements.forEach(element => { element.style.height = `${height}px`; }); if (swiper && swiper.update) { swiper.update(); } }; document.addEventListener("DOMContentLoaded", () => { calculateHeight(); if (swiper) { swiper.on('transitionEnd', calculateHeight); swiper.on('slideChange', calculateHeight); } }); window.addEventListener('resize', calculateHeight); const fullscreenModal = document.getElementById('fullscreenModal'); const fullscreenImage = document.getElementById('fullscreenImage'); const closeFullscreenBtn = document.getElementById('closeFullscreenBtn'); const swiperSlides = document.querySelectorAll('.swiper-slide img'); function openFullscreen(imgSrc) { fullscreenImage.src = imgSrc; fullscreenModal.classList.add('active'); document.body.style.overflow = 'hidden'; // Request full browser fullscreen if (fullscreenModal.requestFullscreen) { fullscreenModal.requestFullscreen(); } else if (fullscreenModal.webkitRequestFullscreen) { fullscreenModal.webkitRequestFullscreen(); } else if (fullscreenModal.msRequestFullscreen) { fullscreenModal.msRequestFullscreen(); } } function closeFullscreen() { fullscreenModal.classList.remove('active'); fullscreenImage.src = ''; document.body.style.overflow = ''; if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement) { if (document.exitFullscreen) { document.exitFullscreen(); } else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); } else if (document.msExitFullscreen) { document.msExitFullscreen(); } } } swiperSlides.forEach(img => { img.addEventListener('click', () => { openFullscreen(img.src); }); }); closeFullscreenBtn.addEventListener('click', closeFullscreen); fullscreenModal.addEventListener('click', (event) => { if (event.target === fullscreenModal) { closeFullscreen(); } }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && fullscreenModal.classList.contains('active')) { closeFullscreen(); } }); </script>
     
 </body>
 </html>
