@@ -162,6 +162,41 @@
     background-color: #e65500; /* Darker Pantone Orange on hover */
     animation-play-state: paused; /* Optional: pause animation on hover */
 }
+
+/*         Following is CSS for Download Button */
+
+        /* If you haven't already, ensure the simpleBounce keyframes are in your CSS: */
+@keyframes simpleBounce {
+    0%, 100% {
+        transform: translateY(0); /* Start and end at original position */
+    }
+    50% {
+        transform: translateY(-10px); /* Move up by 10px at the midpoint */
+    }
+}
+
+.download-guide-button {
+    font-family: 'Inter', sans-serif; /* Ensures the button uses the site's primary font */
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white; /* White text for good contrast on Cambridge Blue */
+    background-color: #96B596; /* Cambridge Blue from your style guide */
+    border: none;
+    border-radius: 8px; /* Standard rounded corners */
+    cursor: pointer;
+    animation: simpleBounce 1.5s infinite; /* Apply the bounce animation */
+    display: inline-block; /* Ensures transform and padding work correctly */
+    text-align: center;
+    text-decoration: none; /* Removes underline from the link */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.download-guide-button:hover {
+    background-color: #87a387; /* Slightly darker Cambridge Blue on hover */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2); /* Shadow appears on hover */
+    animation-play-state: paused; /* Pause animation on hover */
+}
         
     </style>
 
@@ -399,6 +434,11 @@
             </div>
             <p>&copy; <span id="currentYear"></span> Artistic Impressions. All Rights Reserved.</p>
             <p class="text-sm mt-2">Designed with <span class="text-pantone-orange">&hearts;</span> and Creativity</p>
+
+
+            <a href="Demo Henna Guide for Beginners.pdf" download class="download-guide-button">
+    Download Free Henna Guide
+</a>
  
         </div>
         
