@@ -126,7 +126,42 @@
     z-index: 10000;
 }
 
+   /* Following is CSS for survey button */
 
+/* Keyframes for a simple bounce effect */
+@keyframes simpleBounce {
+    0%, 100% {
+        transform: translateY(0); /* Start and end at original position */
+    }
+    50% {
+        transform: translateY(-10px); /* Move up by 10px at the midpoint */
+    }
+}
+
+/* Styling for the quiz button link and the button itself */
+.quiz-button-link {
+    text-decoration: none; /* Remove underline from the link */
+}
+
+.animated-quiz-button {
+    padding: 15px 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    background-color: #FF6008; /* Pantone Orange from your style guide */
+    border: none;
+    border-radius: 8px; /* Standard rounded corners */
+    cursor: pointer;
+    animation: simpleBounce 1.5s infinite;
+    display: inline-block; /* Ensures transform works correctly */
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth transition for hover */
+}
+
+.animated-quiz-button:hover {
+    background-color: #e65500; /* Darker Pantone Orange on hover */
+    animation-play-state: paused; /* Optional: pause animation on hover */
+}
         
     </style>
 
@@ -355,12 +390,19 @@
             </div>
             <p>&copy; <span id="currentYear"></span> Artistic Impressions. All Rights Reserved.</p>
             <p class="text-sm mt-2">Designed with <span class="text-pantone-orange">&hearts;</span> and Creativity</p>
-        </div>
-        <div>
-            <a href="quiz.html">
-    <button>Take our Fun Art Quiz!</button>
+
+
+
+<a href="quiz.html" class="quiz-button-link">
+    <button class="animated-quiz-button">
+        Take our Fun Art Quiz!
+    </button>
 </a>
+
+
+            
         </div>
+        
     </footer>
 
 
