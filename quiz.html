@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Fun Quiz!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* A light neutral background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Define custom colors from your style guide */
+        .bg-french-violet { background-color: #7B00B9; }
+        .text-french-violet { color: #7B00B9; }
+        .bg-teal { background-color: #008080; }
+        .text-teal { color: #008080; }
+        .bg-cambridge-blue { background-color: #96B596; }
+        .text-cambridge-blue { color: #96B596; }
+        .bg-pantone-orange { background-color: #FF6008; }
+        .text-pantone-orange { color: #FF6008; }
+
+        /* Smooth scroll behavior (though not strictly needed for a single quiz page) */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .quiz-container {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 90%;
+            max-width: 700px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .quiz-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #7B00B9; /* text-french-violet */
+        }
+
+        .question-area {
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            color: #008080; /* text-teal */
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .answer-options {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column for mobile */
+            gap: 15px;
+        }
+
+        /* For larger screens, two columns */
+        @media (min-width: 600px) {
+            .answer-options {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+
+        .answer-btn {
+            background-color: #96B596; /* bg-cambridge-blue */
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-family: 'Inter', sans-serif;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .answer-btn:hover {
+            background-color: #82a382; /* Darker Cambridge Blue */
+            transform: translateY(-2px);
+        }
+
+        .answer-btn:active {
+            transform: translateY(0px);
+        }
+
+        .navigation-area {
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            background-color: #FF6008; /* bg-pantone-orange */
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #e65500; /* Darker Pantone Orange */
+        }
+
+        .nav-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .results-area {
+            text-align: center;
+        }
+
+        .results-area h2 {
+            font-size: 2rem;
+            color: #7B00B9; /* text-french-violet */
+            margin-bottom: 15px;
+        }
+
+        .results-area p {
+            font-size: 1.3rem;
+            color: #008080; /* text-teal */
+            margin-bottom: 25px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            height: 10px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 10px;
+            background-color: #FF6008; /* bg-pantone-orange */
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+        /* Styles for selected answer (optional visual feedback) */
+        .answer-btn.selected {
+            background-color: #008080; /* text-teal or another highlight */
+            color: white;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>Art Fun Quiz!</h1>
+        </div>
+
+        <div id="quiz-content">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="question-area">
+                <p id="question-number" class="text-french-violet" style="font-weight:600;"></p>
+                <p id="question-text" class="question-text"></p>
+            </div>
+            <div id="answer-options" class="answer-options">
+                </div>
+            <div class="navigation-area">
+                <button id="next-btn" class="nav-btn">Next Question</button>
+            </div>
+        </div>
+
+        <div id="results-area" class="results-area" style="display: none;">
+            <h2>Quiz Completed!</h2>
+            <p id="score-text"></p>
+            <p id="final-message" class="text-teal" style="font-weight:bold;"></p>
+            <button id="restart-btn" class="nav-btn">Try Again?</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "What two primary colors do you mix to make green?",
+                options: ["Red and Yellow", "Blue and Yellow", "Red and Blue", "Blue and White"],
+                answer: "Blue and Yellow"
+            },
+            {
+                question: "What tool is most commonly used for basic sketching and drawing?",
+                options: ["Paintbrush", "Chisel", "Pencil", "Palette Knife"],
+                answer: "Pencil"
+            },
+            {
+                question: "Which of these is a primary color?",
+                options: ["Green", "Orange", "Red", "Purple"],
+                answer: "Red"
+            },
+            {
+                question: "What is a common surface for watercolor painting?",
+                options: ["Canvas", "Wood Panel", "Metal Sheet", "Paper"],
+                answer: "Paper"
+            },
+            {
+                question: "What is a portrait in art?",
+                options: ["A painting of a landscape", "A sculpture of an animal", "An artwork depicting a person, especially their face", "An abstract design"],
+                answer: "An artwork depicting a person, especially their face"
+            },
+            {
+                question: "Who is famous for painting the 'Mona Lisa'?",
+                options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet", "Leonardo da Vinci"],
+                answer: "Leonardo da Vinci"
+            },
+            {
+                question: "What does 'monochromatic' mean in art terms?",
+                options: ["Using many bright colors", "Using only black and white", "Using only one color and its different shades", "A style of sculpture"],
+                answer: "Using only one color and its different shades"
+            },
+            {
+                question: "Which famous artist is known for co-founding the Cubist movement?",
+                options: ["Salvador Dalí", "Andy Warhol", "Pablo Picasso", "Georgia O'Keeffe"],
+                answer: "Pablo Picasso"
+            },
+            {
+                question: "What art technique involves creating an image by assembling small pieces of colored glass, stone, or other materials?",
+                options: ["Fresco", "Mosaic", "Engraving", "Collage"],
+                answer: "Mosaic"
+            },
+            {
+                question: "In drawing or painting, what does 'perspective' primarily help to create?",
+                options: ["Bright colors", "An illusion of depth on a flat surface", "Abstract patterns", "Textured surfaces"],
+                answer: "An illusion of depth on a flat surface"
+            }
+        ];
+
+        const quizContentEl = document.getElementById('quiz-content');
+        const questionNumberEl = document.getElementById('question-number');
+        const questionTextEl = document.getElementById('question-text');
+        const answerOptionsEl = document.getElementById('answer-options');
+        const nextBtn = document.getElementById('next-btn');
+        const resultsAreaEl = document.getElementById('results-area');
+        const scoreTextEl = document.getElementById('score-text');
+        const finalMessageEl = document.getElementById('final-message');
+        const restartBtn = document.getElementById('restart-btn');
+        const progressBarEl = document.getElementById('progress-bar');
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        function loadQuestion() {
+            selectedAnswer = null; // Reset selected answer
+            const currentQuestion = quizData[currentQuestionIndex];
+            questionNumberEl.textContent = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+            questionTextEl.textContent = currentQuestion.question;
+            answerOptionsEl.innerHTML = ''; // Clear previous options
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.classList.add('answer-btn');
+                button.addEventListener('click', () => selectAnswer(button, option));
+                answerOptionsEl.appendChild(button);
+            });
+
+            updateProgressBar();
+            nextBtn.textContent = (currentQuestionIndex === quizData.length - 1) ? 'Show Results' : 'Next Question';
+            nextBtn.disabled = true; // Disable until an answer is selected
+        }
+
+        function selectAnswer(buttonEl, answer) {
+            // Remove 'selected' class from previously selected button
+            const currentlySelected = answerOptionsEl.querySelector('.selected');
+            if (currentlySelected) {
+                currentlySelected.classList.remove('selected');
+            }
+
+            // Add 'selected' class to the clicked button
+            buttonEl.classList.add('selected');
+            selectedAnswer = answer;
+            nextBtn.disabled = false; // Enable next button
+        }
+
+        function updateProgressBar() {
+            const progressPercentage = ((currentQuestionIndex) / quizData.length) * 100;
+            progressBarEl.style.width = progressPercentage + '%';
+        }
+
+
+        nextBtn.addEventListener('click', () => {
+            if (selectedAnswer) {
+                if (selectedAnswer === quizData[currentQuestionIndex].answer) {
+                    score++;
+                }
+                currentQuestionIndex++;
+                if (currentQuestionIndex < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }
+        });
+
+        function showResults() {
+            quizContentEl.style.display = 'none';
+            resultsAreaEl.style.display = 'block';
+            progressBarEl.style.width = '100%'; // Full progress on results
+
+            scoreTextEl.textContent = `You got ${score} out of ${quizData.length} correct!`;
+
+            let message = "Great work!";
+            if (score <= 3) {
+                message = "Good effort! Keep learning about art!";
+            } else if (score <= 7) {
+                message = "Nice job! You know a good bit about art!";
+            } else if (score <= 9) {
+                message = "Excellent! You're quite the art enthusiast!";
+            } else if (score === 10) {
+                message = "Fantastic! You're an art expert! Great work!";
+            }
+            finalMessageEl.textContent = message;
+        }
+
+        restartBtn.addEventListener('click', () => {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsAreaEl.style.display = 'none';
+            quizContentEl.style.display = 'block';
+            loadQuestion();
+        });
+
+        // Start the quiz
+        loadQuestion();
+    </script>
+
+</body>
+</html>
