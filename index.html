@@ -42,10 +42,17 @@
 }
 
 .gallery-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+overflow: hidden;
+
+}
+
+.gallery-train {
+  display: flex;
+  animation: scrollTrain 90s linear infinite;
+}
+
+.gallery-train:hover {
+  animation-play-state: paused;
 }
 
 .gallery-container {
@@ -56,7 +63,30 @@
     width: 900px;
     overflow: hidden;
 }
+.gallery-image {
+  min-width: 300px;
+  height: 200px;
+  margin-right: 20px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  transition: transform 0.5s ease, box-shadow 0.3s ease;
+}
 
+.gallery-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes scrollTrain {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 .gallery-container img {
     width: 280px;
     height: 180px;
@@ -240,27 +270,37 @@
 
 
 
-
-
-    
-
-
-
 <section class="art-gallery-section bg-cambridge-blue" id="artGallery">
   <h2 class="text-center text-white text-3xl font-semibold py-8">Art Gallery</h2>
-  <div class="gallery-wrapper">
-    <button id="prevBtn" class="gallery-arrow left">&#8592;</button>
-    <div class="gallery-container" id="galleryContainer">
-      <!-- Images will be injected here -->
-    </div>
-    <button id="nextBtn" class="gallery-arrow right">&#8594;</button>
+  <div class="gallery-wrapper overflow-hidden relative w-full max-w-6xl mx-auto">
+    <div id="galleryTrain" class="gallery-train flex"></div>
   </div>
 </section>
 
-<div id="fullscreenViewer" class="fullscreen-viewer" style="display: none;">
-  <span id="closeFullscreen" class="close-button">&times;</span>
-  <img id="fullscreenImage" src="" alt="Fullscreen Image">
+
+    <div id="fullscreenViewer" class="fixed inset-0 bg-black bg-opacity-80 hidden justify-center items-center z-50">
+  <span id="closeFullscreen" class="absolute top-4 right-8 text-white text-4xl cursor-pointer">&times;</span>
+  <img id="fullscreenImage" class="max-w-4xl max-h-[90vh] w-auto h-auto rounded-lg" alt="Full Screen Image">
 </div>
+
+
+
+
+<!--<section class="art-gallery-section bg-cambridge-blue" id="artGallery">-->
+<!--  <h2 class="text-center text-white text-3xl font-semibold py-8">Art Gallery</h2>-->
+<!--  <div class="gallery-wrapper">-->
+<!--    <button id="prevBtn" class="gallery-arrow left">&#8592;</button>-->
+<!--    <div class="gallery-container" id="galleryContainer">-->
+<!--       Images will be injected here -->
+<!--    </div>-->
+<!--    <button id="nextBtn" class="gallery-arrow right">&#8594;</button>-->
+<!--  </div>-->
+<!--</section>-->
+
+<!--<div id="fullscreenViewer" class="fullscreen-viewer" style="display: none;">-->
+<!--  <span id="closeFullscreen" class="close-button">&times;</span>-->
+<!--  <img id="fullscreenImage" src="" alt="Fullscreen Image">-->
+<!--</div>-->
 
 
     <section class="relative overflow-hidden" style=" background-image: url('https://i.imgur.com/D8EtccC.png'); background-attachment: fixed; /* This is the magic for parallax! */ background-position: center center; /* Centers the background image */ background-repeat: no-repeat; /* Ensures the image doesn't tile */ background-size: cover; /* Scales the image to cover the entire section, may crop */ min-height: 70vh; /* Adjust height as needed to show a good portion of the image and content */ /* width: 100%; ensures it takes full width of its parent. If this section is a direct child of <body> and body has no margin, it will be full viewport width. Alternatively, use width: 100vw; for explicit full viewport width, but be mindful of potential scrollbars if body has margin. */ " aria-label="Featured Artwork with Parallax Scrolling Background" > <div class="absolute inset-0 bg-black opacity-40 z-0"></div> <div class="relative z-10 container mx-auto px-6 py-20 md:py-32 flex flex-col items-center justify-center text-center" style="min-height: 70vh;"> <h2 class="text-4xl md:text-5xl font-bold text-white mb-6"> Featured Artwork </h2> <p class="text-lg md:text-xl text-white mb-4 max-w-2xl mx-auto"> "Whispers of the Cosmos" </p> <p class="text-md text-gray-200 max-w-xl mx-auto"> This piece captures the dynamic interplay of light and shadow. As you scroll, the background creates an illusion of depth and movement. </p> </div> </section>
@@ -483,48 +523,44 @@
     "https://i.imgur.com/xXyIZa0.png"
   ];
 
-  let startIndex = 0;
-  const galleryContainer = document.getElementById("galleryContainer");
-  const fullscreenViewer = document.getElementById("fullscreenViewer");
-  const fullscreenImage = document.getElementById("fullscreenImage");
-  const closeBtn = document.getElementById("closeFullscreen");
+  const galleryTrain = document.getElementById("galleryTrain");
 
-  function renderImages() {
-    galleryContainer.innerHTML = '';
-    const visibleImages = imageSources.slice(startIndex, startIndex + 3);
-    visibleImages.forEach(src => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = "Art Image";
-      img.addEventListener("click", () => {
-        fullscreenImage.src = src;
-        fullscreenViewer.style.display = "flex";
-      });
-      galleryContainer.appendChild(img);
+  function populateTrain() {
+    imageSources.forEach(src => {
+      const div = document.createElement("div");
+      div.classList.add("gallery-image");
+      div.style.backgroundImage = `url(${src})`;
+      div.onclick = () => openFullscreen(src);
+      galleryTrain.appendChild(div);
+    });
+
+    // Duplicate images for seamless loop
+    imageSources.forEach(src => {
+      const div = document.createElement("div");
+      div.classList.add("gallery-image");
+      div.style.backgroundImage = `url(${src})`;
+      div.onclick = () => openFullscreen(src);
+      galleryTrain.appendChild(div);
     });
   }
 
-  document.getElementById("prevBtn").addEventListener("click", () => {
-    if (startIndex > 0) {
-      startIndex--;
-      renderImages();
-    }
-  });
+  function openFullscreen(src) {
+    const viewer = document.getElementById("fullscreenViewer");
+    const image = document.getElementById("fullscreenImage");
+    image.src = src;
+    viewer.style.display = "flex";
+  }
 
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    if (startIndex < imageSources.length - 3) {
-      startIndex++;
-      renderImages();
-    }
-  });
+  function closeFullscreen() {
+    document.getElementById("fullscreenViewer").style.display = "none";
+  }
 
-  closeBtn.addEventListener("click", () => {
-    fullscreenViewer.style.display = "none";
-  });
+  populateTrain();
+  
+  document.getElementById("closeFullscreen").addEventListener("click", closeFullscreen);
 
-  // Initial render
-  renderImages();
 </script>
+
 
 
     
