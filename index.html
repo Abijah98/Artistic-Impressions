@@ -14,14 +14,14 @@
             font-family: 'Inter', sans-serif;
         }
         /* Define custom colors for easier use if needed, though Tailwind direct classes are preferred */
-        .bg-french-violet { background-color: #008080 ; }
+        .bg-french-violet { background-color: #96B596 ; }
         .bg-french-violet2 { background-color: #96B596 ; }
         .text-french-violet { color: #7B00B9; }
         .bg-teal { background-color: #008080; }
         .text-teal { color: #008080; }
-        .bg-cambridge-blue { background-color: #96B596; }
+        .bg-cambridge-blue { background-color: #008080; }
         .text-cambridge-blue { color: #96B596; }
-        .bg-pantone-orange { background-color: #FEB975; }
+        .bg-pantone-orange { background-color: #fb7c1f; }
         .text-pantone-orange { color: #FF6008; }
 
         /* Smooth scroll behavior */
@@ -238,9 +238,13 @@ overflow: hidden;
 </head>
     
 <body class="bg-gray-100 text-gray-800">
-    <div class="w-full h-5 bg-teal"></div>
+    <!--<div class="w-full h-5 bg-french-violet"></div>-->
 
     <header class="bg-cambridge-blue shadow-md sticky top-0 z-50 h-24">
+        
+        <div class="w-full h-5 bg-french-violet"></div>
+        
+        
         <nav class="container mx-auto px-6 h-full flex justify-between items-center">
         <a href="#" class="h-full">
             <img src="Website%20Logo%201.1.png" alt="Artistic Impressions Logo" class="h-full" />
@@ -270,7 +274,7 @@ overflow: hidden;
 
 
 
-<section class="art-gallery-section bg-cambridge-blue" id="artGallery">
+<section class="art-gallery-section bg-french-violet" id="artGallery">
   <h2 class="text-center text-white text-3xl font-semibold py-8">Art Gallery</h2>
   <div class="gallery-wrapper overflow-hidden relative w-full max-w-6xl mx-auto">
     <div id="galleryTrain" class="gallery-train flex"></div>
@@ -303,7 +307,7 @@ overflow: hidden;
 <!--</div>-->
 
 
-    <section class="relative overflow-hidden" style=" background-image: url('https://i.imgur.com/D8EtccC.png'); background-attachment: fixed; /* This is the magic for parallax! */ background-position: center center; /* Centers the background image */ background-repeat: no-repeat; /* Ensures the image doesn't tile */ background-size: cover; /* Scales the image to cover the entire section, may crop */ min-height: 70vh; /* Adjust height as needed to show a good portion of the image and content */ /* width: 100%; ensures it takes full width of its parent. If this section is a direct child of <body> and body has no margin, it will be full viewport width. Alternatively, use width: 100vw; for explicit full viewport width, but be mindful of potential scrollbars if body has margin. */ " aria-label="Featured Artwork with Parallax Scrolling Background" > <div class="absolute inset-0 bg-black opacity-40 z-0"></div> <div class="relative z-10 container mx-auto px-6 py-20 md:py-32 flex flex-col items-center justify-center text-center" style="min-height: 70vh;"> <h2 class="text-4xl md:text-5xl font-bold text-white mb-6"> Featured Artwork </h2> <p class="text-lg md:text-xl text-white mb-4 max-w-2xl mx-auto"> "Whispers of the Cosmos" </p> <p class="text-md text-gray-200 max-w-xl mx-auto"> This piece captures the dynamic interplay of light and shadow. As you scroll, the background creates an illusion of depth and movement. </p> </div> </section>
+    <section class="relative overflow-hidden" style=" background-image: url('https://i.imgur.com/D8EtccC.png'); background-attachment: fixed; /* This is the magic for parallax! */ background-position: center center; /* Centers the background image */ background-repeat: no-repeat; /* Ensures the image doesn't tile */ background-size: cover; /* Scales the image to cover the entire section, may crop */ min-height: 70vh; /* Adjust height as needed to show a good portion of the image and content */ /* width: 100%; ensures it takes full width of its parent. If this section is a direct child of <body> and body has no margin, it will be full viewport width. Alternatively, use width: 100vw; for explicit full viewport width, but be mindful of potential scrollbars if body has margin. */ " aria-label="Featured Artwork with Parallax Scrolling Background" > <div class="absolute inset-0 bg-black opacity-40 z-0"></div> <div class="relative z-10 container mx-auto px-6 py-20 md:py-32 flex flex-col items-center justify-center text-center" style="min-height: 70vh;"> <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">  </h2> <p class="text-lg md:text-xl text-white mb-4 max-w-2xl mx-auto">  </p> <p class="text-md text-gray-200 max-w-xl mx-auto">  </p> </div> </section>
 
 
 
@@ -313,7 +317,7 @@ overflow: hidden;
 
 
     
-    <section id="about" class="py-16 md:py-24 bg-cambridge-blue text-gray-700">
+    <section id="about" class="py-16 md:py-24 bg-french-violet text-gray-700">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">About Artistic Impressions</h2>
             <div class="flex flex-col md:flex-row items-center">
